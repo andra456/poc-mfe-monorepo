@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+echo "check running production"
+echo "what container do you want to build?"
+read container
+yarn $container:build
