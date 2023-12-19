@@ -12,7 +12,7 @@
         "clean": "rm -rf ./build",
         "build:dev": "yarn clean && webpack --progress --mode development",
         "build:server": "webpack --config webpack.config.server.js",
-        "deploy": "webpack --progress --mode development",
+        "build": "webpack --progress --mode production",
         "lint": "yarn eslint src --ext .js,.ts,.tsx --ignore-pattern '!.*.js' --no-error-on-unmatched-pattern",
         "lint:fix": "yarn lint --fix"
     },

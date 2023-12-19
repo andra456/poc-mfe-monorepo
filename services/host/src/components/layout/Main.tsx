@@ -190,7 +190,7 @@ function Main() {
                 />
               ))}
 
-              <Route path="/p/*" element={<RouteMasterNext />} />
+              <Route path="/p/*" element={<RouteMasterNext onConfig={onHandleConfig} />} />
               <Route path="*" element={<>{getCookie('custom') ? <NotFound /> : <NotFound />}</>} />
             </Routes>
           )}

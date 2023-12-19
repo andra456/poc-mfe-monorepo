@@ -4,6 +4,7 @@ import { useLang } from '../../libs/strorageDb/query';
 import { Row, Col, Card, Typography, Button, Divider, Input, Form } from 'antd';
 
 import Multilang from 'remote/multilang';
+import NextMultilang from 'next/nextjs-multilang';
 import { setCookie } from '../../libs/hooks/useCookies';
 
 function Bilingual() {
@@ -51,6 +52,9 @@ function Bilingual() {
         </Col>
         <Col span={24} md={12} className="mb-24">
           <Multilang t={t} />
+        </Col>
+        <Col span={24} md={12} className="mb-24">
+          <NextMultilang t={t} />
         </Col>
       </Row>
     </>

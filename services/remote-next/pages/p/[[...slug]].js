@@ -9,12 +9,11 @@ const AsyncPage = loadable(props => import(`../${props.page}`), {
   fallback: <div>loading content...</div>,
 });
 
-export default function Routing(props) {
-  const { value, pathname = 'auth', client = 'airasiax' } = props;
+export default function Routing({ value, pathname = 'auth', client = 'airasiax', onConfig }) {
   const router = useRouter();
   const [isAvailable, setIsAvailable] = useState(false);
   const [current, setCurrent] = useState(client);
-  console.log(pathname, client);
+
   const link = `source/${client}/pages/${pathname}`;
   // const path = location.pathname;
   const linkApi = `http://localhost:8081/api/routers/${client}/${pathname}`;
@@ -23,9 +22,11 @@ export default function Routing(props) {
     console.log('running checker');
     try {
       const isAny = await axios(linkApi);
-      console.log('hahahah', isAny, isAny.status);
+
       if (isAny.status === 200) {
         setIsAvailable(true);
+        const config = require(`../source/${client}/pages/${pathname}/config.json`);
+        config && onConfig && onConfig(config);
       } else {
         setIsAvailable(false);
         props.handleRedirect && props.handleRedirect();

@@ -11,6 +11,7 @@ module.exports = {
           filename: 'static/chunks/remoteEntry.js',
           exposes: {
             './nextjs-remote-component': './components/nextjs-remote-page.js',
+            './nextjs-multilang': './components/multiLang.js',
             './nextjs-remote-page': './pages/index.js',
             './dinamic-next': './pages/p/[[...slug]].js',
           },

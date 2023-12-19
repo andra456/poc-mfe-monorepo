@@ -8,6 +8,7 @@ const MODE = {
     DEVELOPMENT: 'development',
     PRODUCTION: 'production',
 };
+const prod = path.resolve(__dirname, '../../build/customize-react/');
 
 module.exports = (env, { mode }) => {
     return {
@@ -20,7 +21,7 @@ module.exports = (env, { mode }) => {
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.bundle.js',
-            path: path.resolve(__dirname, 'build'),
+            path: mode === MODE.DEVELOPMENT ? path.resolve(__dirname, 'build') : prod,
             publicPath: 'http://localhost:3009/',
         },
         performance: {
