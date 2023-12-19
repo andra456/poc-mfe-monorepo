@@ -1,5 +1,5 @@
 {
-  "name": "host",
+  "name": "container-host",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
