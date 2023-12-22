@@ -1,0 +1,17 @@
+# built folders and files
+**/build/*
+**/dist/*
+**/lib/*
+
+# dependencies folder
+**/node_modules/*
+
+# testing
+coverage/*
+__buggy_tests__
+
+# types
+@types
+
+# package.json
+package.json

@@ -17,11 +17,18 @@
     "exec:tmpl": "lerna exec --scope ~~name~~ --",
     "exec:ts-tmpl": "lerna exec --scope ~~name-ts~~ --",
     "prerelease": "yarn run build:lib",
+    "release": "semantic-release",
     "host:dev": "lerna exec --scope container-host -- yarn dev",
     "remote-react:dev": "lerna exec --scope remote-react -- yarn dev",
     "remote-next:dev": "lerna exec --scope remote-next -- yarn dev",
     "customize:dev": "lerna exec --scope customize-react -- yarn dev",
-    "mfe:start": "concurrently \"yarn host:dev\" \"yarn remote-react:dev\" \"yarn costum-next:dev\" \"yarn customize:dev\""
+    "poc:start": "concurrently \"yarn host:dev\" \"yarn remote-react:dev\" \"yarn remote-next:dev\" \"yarn customize:dev\"",
+    "host:build": "lerna exec --scope container-host -- yarn build",
+    "remote-react:build": "lerna exec --scope remote-react -- yarn build",
+    "remote-next:build": "lerna exec --scope remote-next -- yarn build",
+    "customize:build": "lerna exec --scope customize-react -- yarn build",
+    "poc:build": "concurrently \"yarn host:build\" \"yarn remote-react:build\" \"yarn remote-next:build\" \"yarn customize:build\"",
+    "build:lib": "yarn poc:build"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",

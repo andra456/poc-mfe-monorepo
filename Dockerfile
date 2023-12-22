@@ -8,8 +8,10 @@ WORKDIR /app
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 
+# Install PM2 globally
+RUN npm install --global pm2
+
 # Same as npm install
-# RUN npm install -g yarn
 RUN yarn install
 
 COPY . /app
@@ -40,7 +42,7 @@ CMD [ "yarn", "start" ]
 FROM nginx:alpine
 
 # Copy config nginx
-COPY --from=build /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/nginx/nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /usr/share/nginx/html
 
@@ -52,3 +54,5 @@ COPY --from=build /app/dist/apps .
 
 # Containers run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# Launch app with PM2
+CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
