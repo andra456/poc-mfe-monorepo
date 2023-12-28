@@ -10,8 +10,7 @@ const handleRoutes = (req, res) => {
             encoding: 'utf8',
             flag: 'r',
         });
-
-        return res.status(200).send({ message: 'chunk is here' });
+        return data && res.status(200).send({ message: 'chunk is here' });
     } catch {
         res.status(404).send({ message: `file ${regexName} not exist` });
     }

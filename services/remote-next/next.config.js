@@ -1,9 +1,14 @@
-const NextFederationPlugin = require('@module-federation/nextjs-mf/lib/NextFederationPlugin');
+const NextFederationPlugin = require('@module-federation/nextjs-mf');
 
 module.exports = {
-  distDir: '../../build/next-customs',
+  distDir: '../../build/next-customs/_next',
+  images: {
+    unoptimized: true,
+  },
   webpack(config, options) {
+    console.log(options.isServer, options);
     if (!options.isServer) {
+      console.log('holaaaaa');
       config.plugins.push(
         new NextFederationPlugin({
           name: 'next',

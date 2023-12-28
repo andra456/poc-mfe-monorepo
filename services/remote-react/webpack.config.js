@@ -16,7 +16,7 @@ module.exports = (env, { mode }) => {
     output: {
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.bundle.js',
-      publicPath: 'http://localhost:3003/',
+      publicPath: mode === MODE.DEVELOPMENT ? 'http://localhost:3003/' : '/remote-react/',
       path: mode === MODE.DEVELOPMENT ? path.resolve(__dirname, 'build') : prod,
       clean: true,
     },
@@ -54,9 +54,6 @@ module.exports = (env, { mode }) => {
         exposes: {
           './bridge': './src/bridge',
           './multilang': './src/multiLang',
-        },
-        remotes: {
-          host: 'host@http://localhost:3004/remoteEntry.js',
         },
         shared: {
           ...deps,

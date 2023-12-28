@@ -7,7 +7,6 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import handlebars from 'express-handlebars';
 import { handleRoutes } from './handleRoutes.js';
-import { handleSSR } from './handleSSR.js';
 
 require('./setup.js').setup();
 const corsOptions = {
@@ -46,11 +45,6 @@ require('./routes/index.js')(router);
 
 router.use(
     express.static(path.join(__dirname, '../', 'build'), {
-        redirect: false,
-    })
-);
-router.use(
-    express.static(path.join(__dirname, '../', 'assets'), {
         redirect: false,
     })
 );

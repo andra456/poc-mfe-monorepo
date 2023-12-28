@@ -21,8 +21,8 @@ module.exports = (env, { mode }) => {
         output: {
             filename: '[name].bundle.js',
             chunkFilename: '[name].chunk.bundle.js',
-            path: mode === MODE.DEVELOPMENT ? path.resolve(__dirname, 'build') : prod,
-            publicPath: 'http://localhost:3009/',
+            path: env.production ? prod : path.resolve(__dirname, 'build'),
+            publicPath: env.production ? '/custom-react/' : 'http://localhost:3009/',
         },
         performance: {
             maxEntrypointSize: Infinity,

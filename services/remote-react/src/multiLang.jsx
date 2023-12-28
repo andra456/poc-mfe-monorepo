@@ -1,24 +1,13 @@
 import React, { useEffect } from 'react';
-import { Row, Typography, Button, Input, Divider, Card } from 'antd';
-import useSetTranslation from 'host/langProvider';
+import { Row, Typography, Divider, Card } from 'antd';
 
 const BridgeMultiLang = ({ t }) => {
   const { Title, Paragraph } = Typography;
-  const { useTranslation, setInitLang, arrLang, defaultLang } = useSetTranslation();
+
   // const t = useTranslation();
-
-  useEffect(() => {
-    console.log(arrLang, defaultLang, 'kakakak');
-    return () => {};
-  }, [arrLang, defaultLang]);
-
-  useEffect(() => {
-    setInitLang();
-  }, []);
 
   return (
     <Card className="header-solid h-full">
-      {console.log('hahahahah', t)}
       <Title level={5}>Application Remote React JS</Title>
       <Paragraph className="lastweek">
         Running port at <span className="bnb2">3004</span>

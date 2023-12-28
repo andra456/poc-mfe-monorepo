@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Drawer, Affix } from 'antd';
 import Sidenav from './Sidenav';
 import Header from './Header';
-
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, redirect } from 'react-router-dom';
 import axios from 'axios';
 import { getCookie } from '../../libs/hooks/useCookies';
 // page
@@ -32,6 +31,7 @@ function Main() {
   const [sidenavColor, setSidenavColor] = useState('#1890ff');
   const [sidenavType, setSidenavType] = useState('transparent');
   const [fixed, setFixed] = useState(true);
+  const publicPath = process.env.REACT_APP_PUBLIC_PATH ?? '';
 
   // state route
   const [isCustom, setIsCustom] = useState(false);
@@ -52,7 +52,24 @@ function Main() {
   pathname = pathname.replace('/', '');
   const barWidth = 270;
 
-  const standardRoutes = [RoutingFeature, Bilingual, Auth, Dashboard];
+  const Redirect = ({ to }) => {
+    redirect(to);
+
+    return <div></div>;
+  };
+
+  const standardRoutes = [
+    {
+      path: '/',
+      isLayout: true,
+      keyIndex: 'state',
+      element: <Redirect to="/auth" />,
+    },
+    RoutingFeature,
+    Bilingual,
+    Auth,
+    Dashboard,
+  ];
 
   const FrameRoutes = ({ children, config }) => {
     useEffect(() => {
@@ -76,11 +93,13 @@ function Main() {
     console.log(config);
   };
 
-  const getAnyCostome = async () => {
+  const getAnyCostume = async () => {
     setLoading(true);
-    const indexPath = params[1];
+    const indexParams = process.env.REACT_APP_PARAMS_INDEX ?? 1;
+    const indexPath = params[indexParams];
     const client = getCookie('custom') ?? 'airasia';
-    const base_url = 'http://localhost:3009';
+    const base_url = process.env.REACT_APP_BASE_PUBLIC_PATH_CUSTOM;
+    console.log('hahaha', base_url, indexPath);
     const path_full = `src/routes/source/${client}/pages/${indexPath}`;
     const regexName = path_full.replaceAll('/', '_');
     const regexChunk = `${regexName}_index_tsx.chunk.bundle.js`;
@@ -99,8 +118,12 @@ function Main() {
     }
   };
   useEffect(() => {
-    getAnyCostome();
+    getAnyCostume();
   }, [location]);
+
+  useEffect(() => {
+    console.log(isCustom, loading);
+  }, [isCustom, loading]);
 
   return (
     <Layout className={isLayout ? `layout-dashboard` : 'blank'}>
@@ -185,7 +208,7 @@ function Main() {
               {standardRoutes.map((e, i) => (
                 <Route
                   key={e.keyIndex}
-                  path={e.path}
+                  path={`${publicPath}${e.path}`}
                   element={<FrameRoutes config={{ ...e, element: null }}>{e.element}</FrameRoutes>}
                 />
               ))}

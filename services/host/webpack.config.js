@@ -2,14 +2,37 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { ModuleFederationPlugin } = require('webpack').container;
 const deps = require('./package.json').dependencies;
+require('dotenv').config();
+const webpack = require('webpack');
+
+const BASE_PUBLIC_PATH = process.env.PUBLIC_URL ?? 'http://localhost:3004';
 
 const MODE = {
   DEVELOPMENT: 'development',
   PRODUCTION: 'production',
 };
 
+const developmentRemotes = {
+  host: 'host@http://localhost:3004/remoteEntry.js',
+  remote: 'remote@http://localhost:3003/remoteEntry.js',
+  customize: 'customize@http://localhost:3009/remoteEntry.js',
+  next: 'next@http://localhost:8081/_next/static/chunks/remoteEntry.js',
+};
+
+const productionRemotes = {
+  host: `host@${BASE_PUBLIC_PATH}/remoteEntry.js`,
+  remote: `remote@${BASE_PUBLIC_PATH}/remote-react/remoteEntry.js`,
+  customize: `customize@${BASE_PUBLIC_PATH}/custom-react/remoteEntry.js`,
+  next: 'next@http://localhost:8081/_next/static/chunks/remoteEntry.js',
+};
+
 module.exports = (env, { mode }) => {
   const prod = path.resolve(__dirname, '../../build/container-host/');
+  const isProduction = mode === MODE.PRODUCTION;
+  const envFile = isProduction ? '.env' : '.env.development';
+  const envPath = path.resolve(__dirname, envFile);
+  const envVars = require('dotenv').config({ path: envPath }).parsed || {};
+
   return {
     mode: 'development',
     devtool: 'hidden-source-map',
@@ -21,7 +44,7 @@ module.exports = (env, { mode }) => {
       filename: '[name].bundle.js',
       chunkFilename: '[name].chunk.bundle.js',
       path: mode === MODE.DEVELOPMENT ? path.resolve(__dirname, 'build') : prod,
-      publicPath: 'http://localhost:3004/',
+      publicPath: process.env.PUBLIC_PATH ?? '/',
       clean: true,
     },
     performance: {
@@ -71,12 +94,7 @@ module.exports = (env, { mode }) => {
       new ModuleFederationPlugin({
         name: 'host',
         filename: 'remoteEntry.js',
-        remotes: {
-          host: 'host@http://localhost:3004/remoteEntry.js',
-          remote: 'remote@http://localhost:3003/remoteEntry.js',
-          customize: 'customize@http://localhost:3009/remoteEntry.js',
-          next: 'next@http://localhost:8081/_next/static/chunks/remoteEntry.js',
-        },
+        remotes: mode === MODE.DEVELOPMENT ? developmentRemotes : productionRemotes,
         exposes: {
           './loader': './src/components/common/loader.tsx',
           './langProvider': './src/libs/strorageDb/i18n.ts',
@@ -99,6 +117,9 @@ module.exports = (env, { mode }) => {
       }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
+      }),
+      new webpack.DefinePlugin({
+        'process.env': JSON.stringify(envVars),
       }),
     ],
   };

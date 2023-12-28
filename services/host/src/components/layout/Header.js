@@ -140,12 +140,12 @@ function Header({ placement, name, subName, onPress, handleSidenavColor, handleS
     <div>
       <Row gutter={[24, 0]}>
         {contextHolder}
-        <Col span={24} md={6}>
+        <Col span={6} md={6}>
           <Logo>
             <img src="https://workplaze.dataon.com/2b44c8e47675367568998525c92e77ab.png" alt="logo" />
           </Logo>
         </Col>
-        <Col span={24} md={18} className="header-control">
+        <Col span={18} md={18} className="header-control">
           <Button type="link" onClick={showDrawer}>
             {logsetting}
           </Button>

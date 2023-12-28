@@ -1,8 +1,5 @@
 import React from 'react';
 import loadable from '@loadable/component';
-import ViewsAuth from './viewsAuth';
-const Component = () => {
-    return <ViewsAuth />;
-};
+const Component = loadable(() => import(/* webpackChunkName: "view-report" */ './viewsAuth'));
 
 export default Component;
