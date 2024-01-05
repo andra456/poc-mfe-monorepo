@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8081",
+    "dev": "next",
     "build": "next build",
-    "deploy": "yarn build && next export",
-    "start": "next start  -p 8081",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -16,18 +15,20 @@
     "moment": "2.29.4",
     "nextjs-cors": "^2.1.2",
     "axios": "^1.6.0",
-    "dexie": "^3.2.4",
-    "dexie-react-hooks": "^1.1.6",
-    "socket.io": "3.0.4",
-    "socket.io-client": "3.0.4",
     "react-icons": "^4.11.0",
-    "next": "12.3.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.2",
+    "cors": "^2.8.5",
+    "next": "14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "eslint": "8.14.0",
-    "eslint-config-next": "12.3.4",
-    "typescript": "^4.8.2"
+    "@types/loadable__component": "^5.13.2",
+    "@types/cors": "^2.8.12",
+    "@types/node": "^18.0.1",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.6",
+    "typescript": "^4.7.4"
   }
 }
