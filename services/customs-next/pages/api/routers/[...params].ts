@@ -30,10 +30,10 @@ export default async function handler(
 ) {
   // Run the middleware
   await runMiddleware(req, res, cors);
-  const { params=[] } = req.query;
+  const { params } = req.query;
 
   // Rest of the API logic
-  const link = process.env.BASE_URL +`/source/${params[0]}/pages/${params[1]}`;
+  const link = `http://localhost:3000/source/${params[0]}/pages/${params[1]}`;
   console.log(params, link);
   try {
     const isAny = await fetch(link);
