@@ -1,60 +1,41 @@
 # 1. For build React app
-FROM node:16.20.0 AS build
+FROM node:18 AS builder
 
 # Set working directory
 WORKDIR /app
 
 COPY . /app
-# 
-#COPY package.json /app/package.json
-#COPY package-lock.json /app/package-lock.json
+RUN chmod +x scripts/run.sh
 
 # Install PM2 globally
-RUN npm install --global pm2
+# RUN npm install --global yarn
 
 # Same as npm install
 RUN yarn install
-
-
-
-# ENV CI=true
-# ENV PORT=4200
-
-#CMD [ "yarn", "dev" ]
-
-#FROM development AS build
-
 RUN npm run build
-
-
-# FROM development as dev-envs
-# RUN apt update -y
-# RUN apt install -y --no-install-recommends git
-
-# RUN useradd -s /bin/bash -m vscode
-# RUN groupadd docker
-# RUN usermod -aG docker vscode
-
-# install Docker tools (cli, buildx, compose)
-# COPY --from=gloursdocker/docker / /
-CMD [ "yarn", "start" ]
+# Check after build
+RUN ls build
 
 # 2. For Nginx setup
-FROM nginx:alpine
+FROM node:18 AS runner
 
-# Copy config nginx
-#COPY --from=build /app/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+RUN useradd -s /bin/bash -m vscode
+RUN groupadd docker
+RUN usermod -aG docker vscode
 
-WORKDIR /usr/share/nginx/html
+RUN npm install --global pm2
+WORKDIR /app
 
-# Remove default nginx static assets
-RUN rm -rf ./*
 
 # Copy static assets from builder stage
-COPY --from=build /app/build .
+COPY --from=builder /app/build .
+COPY --from=builder /app/config .
 
-# Containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
-# Launch app with PM2
-CMD [ "pm2-runtime", "start", "npm", "--", "start" ]
+
+RUN ls
+RUN ls /app/dist/
+
+RUN apt update
+RUN apt install net-tools
+
+CMD [ "/bin/bash", "./run.sh" ]
