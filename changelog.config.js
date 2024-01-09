@@ -1,7 +1,7 @@
 module.exports = {
   disableEmoji: true,
   list: ['test', 'feat', 'fix', 'docs', 'refactor', 'style', 'release'],
-  maxMessageLength: 80,
+  maxMessageLength: 85,
   minMessageLength: 3,
   questions: ['type', 'scope', 'subject', 'body'],
   scopes: [],
