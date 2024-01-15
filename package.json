@@ -45,6 +45,7 @@
     "enzyme-adapter-react-16": "^1.15.1",
     "lodash": "^4",
     "react-app-rewired": "^2.2.1",
+    "next": "12.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.9.8",

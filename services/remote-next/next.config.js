@@ -1,16 +1,17 @@
-const NextFederationPlugin = require('@module-federation/nextjs-mf');
-
+const NextFederationPlugin = require('@module-federation/nextjs-mf/lib/NextFederationPlugin');
+const path = require('path');
 module.exports = {
-  distDir: '../../build/next-customs/',
+  distDir: '../../build/next-customs',
   output: 'standalone',
-  images: {
-    unoptimized: true,
+  experimental: {
+    // this includes files from the monorepo base two directories up
+    outputFileTracingRoot: path.join(__dirname, '../../'),
   },
   webpack(config, options) {
     if (!options.isServer) {
       config.plugins.push(
         new NextFederationPlugin({
-          name: 'next',
+          name: 'remote',
           remotes: {},
           filename: 'static/chunks/remoteEntry.js',
           exposes: {
@@ -20,10 +21,6 @@ module.exports = {
             './dinamic-next': './pages/p/[...slug].tsx',
           },
           shared: {
-            next: {
-              requiredVersion: false,
-              singleton: true,
-            },
             react: {
               requiredVersion: false,
               singleton: true,
@@ -38,5 +35,5 @@ module.exports = {
     return config;
   },
   // your original next.config.js export
-  reactStrictMode: false,
+  reactStrictMode: true,
 };
