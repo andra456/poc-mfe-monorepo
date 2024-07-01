@@ -1,6 +1,26 @@
-# SFReport micro container
+# POC MFE Monorepo
 
-Sun fish repoting application micro frontend container
+This repository is a Proof of Concept (POC) for a Micro Frontend (MFE) architecture within a monorepo setup. It demonstrates how to manage multiple micro frontend applications in a single repository using modern tools and techniques.
+
+## Table of Contents
+- [Installation](#installation)
+- [Description](#description)
+- [Features](#features)
+- [Requirements](#requirements)
+- [Structure](#structure)
+- [Getting Started](#getting-started)
+  - [Code Editor](#code-editor)
+  - [Naming](#naming)
+  - [Code Rules & Standard](#code-rules--standard)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/andra456/poc-mfe-monorepo.git
+   ```
 
 ## Description
 
@@ -76,11 +96,6 @@ The project develop using micro container frontend architecture & monorepo we pr
 
 ## Getting started
 
-### How to serve
-
-### Running Test
-
-### Running Build
 
 ### Code Editor
 
